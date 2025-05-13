@@ -14,3 +14,17 @@ export interface HouseHoldItems {
   icons: string;
   text: string;
 }
+
+export interface OnboardingSlide {
+  title?: {
+    title1?: string;
+    title2?: string;
+    title3?: string;
+  };
+  description?: {
+    desOne?: string;
+    desTwo?: string;
+    desThree?: string;
+  };
+  image?: string;
+}

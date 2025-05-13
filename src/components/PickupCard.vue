@@ -2,6 +2,9 @@
 import {
   DatePicker,
   FlexboxLayout,
+  FormattedString,
+  Label,
+  Span,
   StackLayout,
   WrapLayout,
 } from "@nativescript/core";
@@ -18,33 +21,54 @@ const handleClick = (component: any) => {
   <StackLayout
     class="bg-white shadow-lg mt-8 p-4 rounded-lg border-2 border-[#E6EAF2]"
   >
-    <FlexboxLayout class="justify-between">
-      <Label
-        class="text-black text-lg font-semibold mb-5"
-        text="Upcoming Pickup"
-      ></Label>
-      <WrapLayout>
-        <Label text="Type:" class="text-[#575E6C] font-medium mr-2"></Label>
-        <WrapLayout class="bg-[#EFF5F0] px-2 py-1 rounded-xl">
-          <Label class="fa mr-2 text-green-500" text="&#xf1b8;"></Label>
-          <Label text="Recycle" class="text-black text-sm"></Label>
-        </WrapLayout>
-      </WrapLayout>
+    <FlexboxLayout class="justify-between items-center mb-5">
+      <StackLayout>
+        <Label
+          class="text-black text-lg font-semibold"
+          text="Upcoming Pickup"
+          fontSize="20"
+        ></Label>
+      </StackLayout>
+      <StackLayout orientation="horizontal">
+        <Label
+          text="Type:"
+          fontSize="16"
+          class="text-[#575E6C] font-medium mr-2"
+        ></Label>
+        <Label class="bg-[#EFF5F0] rounded-xl text-center py-2" width="100">
+          <FormattedString>
+            <Span class="fa text-green-500" text="&#xf1b8;" />
+            <Span text=" " />
+            <Span text=" " />
+            <Span text="Houshold" class="text-black text-sm" />
+          </FormattedString>
+        </Label>
+      </StackLayout>
     </FlexboxLayout>
 
     <FlexboxLayout class="justify-between items-center">
-      <WrapLayout>
-        <Label class="fa mr-2" text="&#xf073;"></Label>
-        <Label
-          class="text-[#575E6C] font-medium"
-          text="Thursday, 8th May 2025"
-        ></Label>
-      </WrapLayout>
+      <Label fontSize="14">
+        <FormattedString>
+          <Span class="fa" text="&#xf073;" />
+          <Span text=" " />
+          <Span text=" " />
+          <Span
+            class="text-[#575E6C] font-medium"
+            text="Thursday, 8th May 2025"
+          />
+        </FormattedString>
+      </Label>
 
-      <WrapLayout>
-        <Label class="fa mr-2" text="&#xf017;"></Label>
-        <Label class="text-[#575E6C] font-medium" text="12pm"></Label>
-      </WrapLayout>
+      <StackLayout>
+        <Label fontSize="14">
+          <FormattedString>
+            <Span class="fa" text="&#xf017;" />
+            <Span text=" " />
+            <Span text=" " />
+            <Span class="text-[#575E6C] font-medium" text="12pm" />
+          </FormattedString>
+        </Label>
+      </StackLayout>
     </FlexboxLayout>
 
     <StackLayout class="bg-[#EFF5F0] p-2 rounded-md text-[#1D3D23] mt-5">

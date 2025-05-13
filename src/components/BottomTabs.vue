@@ -20,23 +20,30 @@ const navigateToPage = (component: any) => {
 
 <template>
   <FlexboxLayout dock="bottom" class="px-10 py-3 justify-between h-[100px]">
-    <FlexboxLayout class="flex-col items-center justify-center">
+    <!-- NAVIGATE TO HOME PAGE -->
+    <FlexboxLayout
+      class="flex-col items-center justify-center"
+      @tap="navigateToPage(Home)"
+    >
       <Label class="fa text-[#54B469] mb-1" text="&#xf015;" />
-      <Label
-        @tap="navigateToPage(Home)"
-        text="Home"
-        class="text-center text-lg font-medium text-black"
-      />
+      <Label text="Home" class="text-center text-lg font-medium text-black" />
     </FlexboxLayout>
+    <!-- NAVIGATE TO HOME PAGE -->
 
-    <FlexboxLayout class="flex-col items-center justify-center">
+    <!-- NAVIGATE TO ACTIVITY PAGE -->
+    <FlexboxLayout
+      class="flex-col items-center justify-center"
+      @tap="navigateToPage(Activity)"
+    >
       <Label class="fa mb-1 text-[#575E6C]" text="&#xf201;" />
       <Label
-        @tap="navigateToPage(Activity)"
         text=" Activity"
         class="text-center text-lg font-medium text-black"
       />
     </FlexboxLayout>
+    <!-- NAVIGATE TO ACTIVITY PAGE -->
+
+    <!-- NAVIGATE TO REQUEST PAGE -->
     <FlexboxLayout
       class="flex-col items-center justify-center"
       @tap="navigateToPage(Requests)"
@@ -47,6 +54,9 @@ const navigateToPage = (component: any) => {
         class="text-center text-lg font-medium text-black"
       />
     </FlexboxLayout>
+    <!-- NAVIGATE TO REQUEST PAGE -->
+
+    <!-- NAVIGATE TO PROFILE PAGE -->
     <FlexboxLayout class="flex-col items-center justify-center">
       <Label class="fa mb-1 text-[#575E6C]" text="&#xf007;" />
 
@@ -55,6 +65,7 @@ const navigateToPage = (component: any) => {
         class="text-center text-lg font-medium text-black"
       />
     </FlexboxLayout>
+    <!-- NAVIGATE TO PROFILE PAGE -->
   </FlexboxLayout>
 </template>
 
