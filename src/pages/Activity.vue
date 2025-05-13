@@ -5,11 +5,12 @@ import {
   StackLayout,
   WrapLayout,
 } from "@nativescript/core";
+import { $navigateBack } from "nativescript-vue";
 import BottomTabs from "~/components/BottomTabs.vue";
 </script>
 
 <template>
-  <Page actionBarHidden="true">
+  <Page actionBarHidden="true" enableSwipeBackNavigation="true">
     <DockLayout>
       <BottomTabs />
 
