@@ -6,3 +6,7 @@ ActionBar {
   background-color: #65adf1;
   color: white;
 }
+
+.fa {
+  font-family: "fa-solid-900";
+}
