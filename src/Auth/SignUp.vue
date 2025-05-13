@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {
-  Dialogs,
   FlexboxLayout,
   FormattedString,
   Label,
@@ -9,10 +8,21 @@ import {
   StackLayout,
   TextField,
 } from "@nativescript/core";
+import { $showModal } from "nativescript-vue";
 
-import { $navigateTo, ref } from "nativescript-vue";
+import { $closeModal, $navigateTo, ref } from "nativescript-vue";
+import SuccessModal from "~/components/modal/SuccessModal.vue";
 import Home from "~/pages/Home.vue";
 import Setup from "~/pages/Setup.vue";
+
+const completeSetup = () => {
+  $navigateTo(Home, { clearHistory: true });
+};
+
+const skipForNow = () => {
+  $navigateTo(Home, { clearHistory: true });
+  $closeModal;
+};
 
 const showPassword = ref<boolean>(false);
 
@@ -31,19 +41,24 @@ const handleFormSubmit = () => {
     form.value.phone = "";
     form.value.password = "";
 
-    Dialogs.confirm({
-      title: "Success! You're Almost There 🎉",
-      message:
-        "Thanks for signing up. Let's set up your account so we can tailor your EcoBin experience to you!",
-      cancelButtonText: "Skip for Now",
-      okButtonText: "Complete Setup",
-    }).then((result) => {
-      if (result) {
-        $navigateTo(Setup);
-      } else {
-        $navigateTo(Home, { clearHistory: true });
-      }
-    });
+    const viewModal = () => {
+      $showModal(SuccessModal, {
+        fullscreen: false,
+        animated: true,
+        stretched: true,
+        transition: {
+          name: "fade",
+          duration: 300,
+          curve: "easeIn",
+        },
+        props: {
+          completeSetup,
+          skipForNow,
+        },
+      });
+    };
+
+    viewModal();
   } catch (error) {
     console.log("Error to Signup", error);
     console.error("Error:", error);
