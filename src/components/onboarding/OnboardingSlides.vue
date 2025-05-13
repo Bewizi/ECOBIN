@@ -106,9 +106,9 @@ const navigateToSignup = () => {
             textWrap="true"
           >
             <FormattedString>
-              <Span :text="slides[currentSlide].title.title1" />
-              <Span :text="slides[currentSlide].title.title2" />
-              <Span :text="slides[currentSlide].title.title3" />
+              <Span :text="slides[currentSlide]?.title?.title1" />
+              <Span :text="slides[currentSlide]?.title?.title2" />
+              <Span :text="slides[currentSlide]?.title?.title3" />
             </FormattedString>
           </Label>
 
@@ -119,9 +119,9 @@ const navigateToSignup = () => {
             textWrap="true"
           >
             <FormattedString>
-              <Span :text="slides[currentSlide].description.desOne" />
-              <Span :text="slides[currentSlide].description.desTwo" />
-              <Span :text="slides[currentSlide].description.desThree" />
+              <Span :text="slides[currentSlide]?.description?.desOne" />
+              <Span :text="slides[currentSlide]?.description?.desTwo" />
+              <Span :text="slides[currentSlide]?.description?.desThree" />
             </FormattedString>
           </Label>
 
