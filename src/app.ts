@@ -1,4 +1,18 @@
-import { createApp } from 'nativescript-vue';
-import Home from './components/Home.vue';
+import { createApp } from "nativescript-vue";
 
-createApp(Home).start();
+import "@/app.css";
+
+import App from "@/App.vue";
+
+const app = createApp(App);
+app.registerElement(
+  "CheckBox",
+  () => require("@nativescript-community/ui-checkbox").CheckBox,
+  {
+    model: {
+      prop: "checked",
+      event: "checkedChange",
+    },
+  }
+);
+app.start();
