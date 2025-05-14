@@ -1,13 +1,15 @@
-<script setup lang="ts">
-import SignUp from "./Auth/SignUp.vue";
-import SuccessModal from "./components/modal/SuccessModal.vue";
+<script lang="ts" setup>
 import OnboardingSlides from "./components/onboarding/OnboardingSlides.vue";
+import { Frame } from "@nativescript/core";
+import Home from "./pages/Home.vue";
+import Profile from "./pages/Profile.vue";
 </script>
 
 <template>
   <Frame>
     <!-- <SignUp /> -->
     <!-- <SuccessModal /> -->
+    <!-- <Profile /> -->
     <OnboardingSlides />
   </Frame>
 </template>
