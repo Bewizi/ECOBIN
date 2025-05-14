@@ -1,9 +1,10 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { $navigateTo } from "nativescript-vue";
 import Home from "~/pages/Home.vue";
 import Activity from "~/pages/Activity.vue";
 import Requests from "~/pages/Requests.vue";
-// import { FlexboxLayout, StackLayout } from "@nativescript/core";
+import { FlexboxLayout } from "@nativescript/core";
+import Profile from "@/pages/Profile.vue";
 
 const navigateToPage = (component: any) => {
   $navigateTo(component, {
@@ -19,14 +20,14 @@ const navigateToPage = (component: any) => {
 </script>
 
 <template>
-  <FlexboxLayout dock="bottom" class="px-10 py-3 justify-between h-[100px]">
+  <FlexboxLayout class="px-10 py-3 justify-between h-[100px]" dock="bottom">
     <!-- NAVIGATE TO HOME PAGE -->
     <FlexboxLayout
       class="flex-col items-center justify-center"
       @tap="navigateToPage(Home)"
     >
       <Label class="fa text-[#54B469] mb-1" text="&#xf015;" />
-      <Label text="Home" class="text-center text-lg font-medium text-black" />
+      <Label class="text-center text-lg font-medium text-black" text="Home" />
     </FlexboxLayout>
     <!-- NAVIGATE TO HOME PAGE -->
 
@@ -37,8 +38,8 @@ const navigateToPage = (component: any) => {
     >
       <Label class="fa mb-1 text-[#575E6C]" text="&#xf201;" />
       <Label
-        text=" Activity"
         class="text-center text-lg font-medium text-black"
+        text=" Activity"
       />
     </FlexboxLayout>
     <!-- NAVIGATE TO ACTIVITY PAGE -->
@@ -50,19 +51,22 @@ const navigateToPage = (component: any) => {
     >
       <Label class="fa mb-1 text-[#575E6C]" text="&#xf1f8; " />
       <Label
-        text=" Requests"
         class="text-center text-lg font-medium text-black"
+        text=" Requests"
       />
     </FlexboxLayout>
     <!-- NAVIGATE TO REQUEST PAGE -->
 
     <!-- NAVIGATE TO PROFILE PAGE -->
-    <FlexboxLayout class="flex-col items-center justify-center">
+    <FlexboxLayout
+      class="flex-col items-center justify-center"
+      @tap="navigateToPage(Profile)"
+    >
       <Label class="fa mb-1 text-[#575E6C]" text="&#xf007;" />
 
       <Label
-        text=" Profile"
         class="text-center text-lg font-medium text-black"
+        text=" Profile"
       />
     </FlexboxLayout>
     <!-- NAVIGATE TO PROFILE PAGE -->
