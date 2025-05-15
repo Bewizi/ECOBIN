@@ -9,7 +9,7 @@ export const Toast = {
       message,
       backgroundColor: "#54B469", // Your app's primary color
       textColor: "white",
-      actionText: "OK",
+      // actionText: "OK",
       hideDelay: 3000,
     });
   },
@@ -19,7 +19,7 @@ export const Toast = {
       message,
       backgroundColor: "#FF5252", // Error color
       textColor: "white",
-      actionText: "OK",
+      // actionText: "OK",
       hideDelay: 4000,
     });
   },
