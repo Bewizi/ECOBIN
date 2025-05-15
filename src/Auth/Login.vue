@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {
+  ActivityIndicator,
   Dialogs,
   FlexboxLayout,
   FormattedString,
@@ -10,7 +11,7 @@ import {
   TextField,
 } from "@nativescript/core";
 
-import { $navigateTo, ref } from "nativescript-vue";
+import { ref } from "nativescript-vue";
 import Home from "~/pages/Home.vue";
 import api from "~/services/api_service";
 import SignUp from "./SignUp.vue";
@@ -18,13 +19,17 @@ import { navigate } from "~/utils/navigation";
 import { Toast } from "~/services/toast_service";
 
 const showPassword = ref<boolean>(false);
+const isLoading = ref<boolean>(false);
 
 const form = ref({
   email: "",
   password: "",
 });
 
+const errors = ref<Record<string, string>>({});
+
 const handleFormSubmit = async () => {
+  isLoading.value = true;
   try {
     console.log("Form Submitted", form.value);
 
@@ -36,27 +41,30 @@ const handleFormSubmit = async () => {
     if (response.status === 200) {
       await Toast.showSuccess("Login Successful");
       console.log("Login Successful");
-      $navigateTo(Home, { clearHistory: true });
-    } else {
-      await Toast.showError("Invalid email or password");
-      console.log("Login Failed with status:", response.status);
-      // Dialogs.alert({
-      //   title: "Login Failed",
-      //   message: "Invalid email or password",
-      //   okButtonText: "OK",
-      // });
+      navigate(Home, { clearHistory: true });
+
+      form.value.email = "";
+      form.value.password = "";
     }
 
-    form.value.email = "";
-    form.value.password = "";
+    if (
+      response.status === 400 ||
+      response.status === 401 ||
+      response.status === 422
+    ) {
+      if (errors) {
+        errors.value;
+      }
+      await Toast.showError("Invalid credentials");
+    } else {
+      await Toast.showError("Login failed. Please try again.");
+    }
   } catch (error) {
     console.error("Login Failed", error);
+
     await Toast.showError("Login failed. Please try again.");
-    // Dialogs.alert({
-    //   title: "Error",
-    //   message: "Login failed. Please try again.",
-    //   okButtonText: "OK",
-    // });
+  } finally {
+    isLoading.value = false;
   }
 };
 
@@ -74,15 +82,10 @@ const navigateToSignup = () => {
     <RootLayout>
       <StackLayout>
         <StackLayout class="bg-[#54B469] py-10 px-5 text-white">
-          <Label
-            text="Let’s Get You Started"
-            fontSize="24"
-            class="font-medium mb-5"
-          />
+          <Label text="Log in" fontSize="24" class="font-medium mb-5" />
           <Label textWrap="true" class="" fontSize="14" lineHeight="5">
             <FormattedString>
-              <Span text="Create an account to keep your \n" />
-              <Span text="environment clean." />
+              <Span text="Welcome back" />
             </FormattedString>
           </Label>
         </StackLayout>
@@ -96,6 +99,11 @@ const navigateToSignup = () => {
             hint="Ecobin@gmail.com"
             keyboardType="email"
             class="mb-4 p-4 border-2 border-[#C1C8D6] rounded-xl placeholder:text-[#7E8798]"
+          />
+          <Label
+            v-if="errors.email"
+            :text="errors.email"
+            class="text-red-500 mb-2"
           />
           <!-- Email Address -->
 
@@ -119,10 +127,26 @@ const navigateToSignup = () => {
           </FlexboxLayout>
 
           <Button
-            text="Create Account"
+            :isEnabled="!isLoading"
             class="bg-[#54B469] text-white py-5 rounded-xl"
             @tap="handleFormSubmit"
-          />
+          >
+            <FormattedString>
+              <Span
+                fontSize="14"
+                v-if="!isLoading"
+                text="Login"
+                class="text-white font-medium"
+              />
+
+              <Span
+                v-else
+                text="&#xf110;"
+                class="fa text-white spin-animation"
+                fontSize="20"
+              />
+            </FormattedString>
+          </Button>
 
           <!-- Terms -->
           <StackLayout>
@@ -162,4 +186,20 @@ const navigateToSignup = () => {
   </Page>
 </template>
 
-<style scoped></style>
+<style scoped>
+.spin-animation {
+  animation-name: spin;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>
