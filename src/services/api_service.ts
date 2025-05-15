@@ -6,6 +6,8 @@ export default {
   auth: {
     register: async (userData: {
       firstname: string;
+      lastname: string;
+      phoneNumber: string;
       email: string;
       password: string;
     }) => {
@@ -19,8 +21,19 @@ export default {
           },
           content: JSON.stringify(userData),
         });
+
+        const responseData = response.content?.toJSON();
+
+        if (response.statusCode >= 400) {
+          throw {
+            staus: response.statusCode,
+            message: responseData?.message || "Registration failed",
+            errors: responseData?.errors,
+          };
+        }
+
         return {
-          data: response.content?.toJSON(),
+          data: responseData,
           status: response.statusCode,
         };
       } catch (error) {
@@ -41,8 +54,20 @@ export default {
           },
           content: JSON.stringify(userData),
         });
+        const responseData = response.content?.toJSON();
+
+        if (response.statusCode >= 400) {
+          throw {
+            staus: response.statusCode,
+            message:
+              responseData?.message ||
+              "Login failed Incorrect password or User doesn't exit",
+            errors: responseData?.errors,
+          };
+        }
+
         return {
-          data: response.content?.toJSON(),
+          data: responseData,
           status: response.statusCode,
         };
       } catch (error) {
