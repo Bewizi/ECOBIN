@@ -14,6 +14,10 @@ import { $closeModal, $navigateTo, ref } from "nativescript-vue";
 import SuccessModal from "~/components/modal/SuccessModal.vue";
 import Home from "~/pages/Home.vue";
 import Setup from "~/pages/Setup.vue";
+// import { register } from "~/utils/httpClient";
+import api from "~/services/api_service";
+import { navigate } from "~/utils/navigation";
+import Login from "./Login.vue";
 
 const completeSetup = () => {
   $navigateTo(Home, { clearHistory: true });
@@ -27,18 +31,29 @@ const skipForNow = () => {
 const showPassword = ref<boolean>(false);
 
 const form = ref({
-  fullname: "",
+  firstname: "",
   email: "",
-  phone: "",
+  // phone: "",
   password: "",
 });
 
-const handleFormSubmit = () => {
+const handleFormSubmit = async () => {
   try {
     console.log("Form Submitted", form.value);
-    form.value.fullname = "";
+
+    const respone = await api.auth.register({
+      firstname: form.value.firstname,
+      email: form.value.email,
+      password: form.value.password,
+    });
+
+    if (respone.status === 201) {
+      console.log("Registration Successful", respone);
+    }
+
+    form.value.firstname = "";
     form.value.email = "";
-    form.value.phone = "";
+    // form.value.phone = "";
     form.value.password = "";
 
     const viewModal = () => {
@@ -60,15 +75,16 @@ const handleFormSubmit = () => {
 
     viewModal();
   } catch (error) {
-    console.log("Error to Signup", error);
-    console.error("Error:", error);
+    console.log("Registration Failed", error);
   }
 };
 
-// const password = ref("");
-
 const togglePasswordVisibility = () => {
   showPassword.value = !showPassword.value;
+};
+
+const navigateToSignup = () => {
+  navigate(Login);
 };
 </script>
 
@@ -95,7 +111,7 @@ const togglePasswordVisibility = () => {
           <!-- Full Name -->
           <Label text="Full Name" class="text-black mb-2" fontSize="20" />
           <TextField
-            v-model="form.fullname"
+            v-model="form.firstname"
             hint="Enter your full name"
             class="mb-4 p-4 border-2 border-[#C1C8D6] rounded-xl placeholder:text-[#7E8798]"
           />
@@ -112,13 +128,13 @@ const togglePasswordVisibility = () => {
           <!-- Email Address -->
 
           <!-- Phone Number -->
-          <Label text="Phone Number" class="text-black mb-2" fontSize="20" />
+          <!-- <Label text="Phone Number" class="text-black mb-2" fontSize="20" />
           <TextField
             v-model="form.phone"
             hint="Enter your phone number"
             keyboardType="phone"
             class="mb-4 p-4 border-2 border-[#C1C8D6] rounded-xl placeholder:text-[#7E8798]"
-          />
+          /> -->
           <!-- Phone Number -->
 
           <!-- Password -->
@@ -147,19 +163,35 @@ const togglePasswordVisibility = () => {
           />
 
           <!-- Terms -->
-          <Label
-            lineHeight="5"
-            fontSize="14"
-            class="text-center mt-4 text-[#575E6C]"
-            textWrap="true"
-          >
-            <FormattedString>
-              <Span text="By signing up, you agree to EcoBin's " />
-              <Span text="Terms of \n Service" class="text-[#54B469]" />
-              <Span text=" and " />
-              <Span text="Privacy Policy" class="text-[#54B469]" />
-            </FormattedString>
-          </Label>
+          <StackLayout>
+            <Label
+              lineHeight="5"
+              fontSize="14"
+              class="text-center mt-4 text-[#575E6C]"
+              textWrap="true"
+            >
+              <FormattedString>
+                <Span text="By signing up, you agree to EcoBin's " />
+                <Span text="Terms of \n Service" class="text-[#54B469]" />
+                <Span text=" and " />
+                <Span text="Privacy Policy" class="text-[#54B469]" />
+              </FormattedString>
+            </Label>
+
+            <FlexboxLayout class="justify-center items-center mt-4">
+              <Label
+                text="Have an account? "
+                fontSize="20"
+                class="text-[#575E6C]"
+              />
+              <Label
+                text="Login"
+                fontSize="20"
+                class="text-[#54B469] font-medium"
+                @tap="navigateToSignup"
+              />
+            </FlexboxLayout>
+          </StackLayout>
         </StackLayout>
         <!-- Form Fields-->
       </StackLayout>
