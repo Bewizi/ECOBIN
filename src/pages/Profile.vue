@@ -13,19 +13,16 @@ import {
 import { $navigateTo, defineComponent } from "nativescript-vue";
 import Login from "~/Auth/Login.vue";
 import BottomTabs from "~/components/BottomTabs.vue";
+import { Toast } from "~/services/toast_service";
+import { navigate } from "~/utils/navigation";
 
 defineComponent({
   name: "Profile",
 });
 
 const logout = () => {
-  $navigateTo(Login);
-  Dialogs.confirm({
-    message: "Are You Sure You want To Logout",
-    cancelButtonText: "No",
-    okButtonText: "Yes",
-    neutralButtonText: "Cancel",
-  });
+  navigate(Login);
+  Toast.showSuccess("Logout Successful");
 };
 </script>
 
