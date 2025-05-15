@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import {
+  Dialogs,
   DockLayout,
   FlexboxLayout,
   FormattedString,
@@ -9,12 +10,23 @@ import {
   Span,
   StackLayout,
 } from "@nativescript/core";
-import { defineComponent } from "nativescript-vue";
+import { $navigateTo, defineComponent } from "nativescript-vue";
+import Login from "~/Auth/Login.vue";
 import BottomTabs from "~/components/BottomTabs.vue";
 
 defineComponent({
   name: "Profile",
 });
+
+const logout = () => {
+  $navigateTo(Login);
+  Dialogs.confirm({
+    message: "Are You Sure You want To Logout",
+    cancelButtonText: "No",
+    okButtonText: "Yes",
+    neutralButtonText: "Cancel",
+  });
+};
 </script>
 
 <template>
@@ -160,21 +172,16 @@ defineComponent({
             <!-- About Us -->
 
             <!-- Logout -->
-            <StackLayout class="bg-gray-100 rounded-2xl p-4 mb-5">
+            <StackLayout class="bg-gray-100 rounded-2xl p-4 mb-5" @tap="logout">
               <FlexboxLayout class="justify-between">
                 <Label fontSize="20" class="text-black">
                   <FormattedString>
-                    <Span class="fa" text="&#xf2f5;" />
+                    <Span class="fa text-red-500" text="&#xf2f5;" />
                     <Span text="  " />
                     <Span text="  " />
                     <Span text="Logout" />
                   </FormattedString>
                 </Label>
-                <Label
-                  fontSize="20"
-                  class="fa text-[#585E6D]"
-                  text="&#xf054;"
-                />
               </FlexboxLayout>
             </StackLayout>
             <!-- Logout -->
