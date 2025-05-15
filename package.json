@@ -4,12 +4,16 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@klippa/nativescript-http": "^3.0.4",
     "@nativescript-community/fonticon": "^3.0.0",
+    "@nativescript-community/https": "^4.1.19",
     "@nativescript-community/ui-checkbox": "^2.0.12",
     "@nativescript-community/ui-material-button": "^7.2.71",
     "@nativescript-community/ui-material-cardview": "^7.2.71",
     "@nativescript-community/ui-material-core": "^7.2.71",
+    "@nativescript-community/ui-material-snackbar": "^7.2.71",
     "@nativescript/core": "~8.8.6",
+    "axios": "^1.9.0",
     "nativescript-vue": "^3.0.0"
   },
   "devDependencies": {
