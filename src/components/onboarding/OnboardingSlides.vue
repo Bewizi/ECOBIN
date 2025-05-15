@@ -10,6 +10,7 @@ import {
 } from "@nativescript/core";
 import SignUp from "~/Auth/SignUp.vue";
 import { OnboardingSlide } from "~/types";
+import Login from "~/Auth/Login.vue";
 
 const currentSlide = ref(0);
 
@@ -68,7 +69,7 @@ const goToNextSlide = () => {
 
 const navigateToSignup = () => {
   // Navigation logic
-  $navigateTo(SignUp, {
+  $navigateTo(Login, {
     transition: {
       name: "fade",
       duration: 300,
