@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { FlexboxLayout, StackLayout } from "@nativescript/core";
-import { $closeModal, $navigateTo } from "nativescript-vue";
+import { $closeModal } from "nativescript-vue";
 import Home from "~/pages/Home.vue";
 import Setup from "~/pages/Setup.vue";
+import { navigate } from "~/utils/navigation";
 
 // defineProps({
 //   completeSetup: {
@@ -18,12 +19,12 @@ import Setup from "~/pages/Setup.vue";
 // completeSetup($navigateTo(Home, { clearHistory: true }))
 
 const completeSetup = () => {
-  $navigateTo(Setup, { clearHistory: true });
+  navigate(Setup, { clearHistory: true });
   $closeModal();
 };
 
 const skipForNow = () => {
-  $navigateTo(Home, { clearHistory: true });
+  navigate(Home, { clearHistory: true });
   $closeModal();
 };
 </script>
