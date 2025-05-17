@@ -53,8 +53,8 @@ import WasteActivity from "~/components/WasteActivity.vue";
             <DateSelector />
 
             <StackLayout class="bg-[#EFF5F0] p-2 rounded-md text-[#1D3D23]">
-              <FlexboxLayout class="items-center gap-2">
-                <Label class="fa mr-2" text="&#xf05a;" />
+              <FlexboxLayout class="items-center space-x-2">
+                <Label class="fa" text="&#xf05a;" />
                 <Label
                   text="Your next pickup is scheduled for Thursday, 9 AM"
                 />

@@ -2,13 +2,14 @@
 import {
   FlexboxLayout,
   FormattedString,
-  GridLayout,
   Label,
   ScrollView,
   Span,
   StackLayout,
 } from "@nativescript/core";
 import { colors } from "~/utils/colors";
+import { navigate } from "~/utils/navigation";
+import Home from "./Home.vue";
 
 // Add your setup logic here
 </script>
@@ -22,7 +23,12 @@ import { colors } from "~/utils/colors";
           class="text-black mb-5"
           text="Add a profile Picture"
         />
-        <Label textWrap="true" lineHeight="5" class="text-[#575E6C]">
+        <Label
+          textWrap="true"
+          lineHeight="5"
+          fontSize="14"
+          class="text-[#575E6C]"
+        >
           <FormattedString>
             <Span
               text="Your photo helps us personalize your experience and \n "
@@ -35,33 +41,40 @@ import { colors } from "~/utils/colors";
         </Label>
 
         <!-- Add your setup form components here -->
-        <FlexboxLayout class="justify-center items-center">
+        <FlexboxLayout class="justify-center items-center my-32">
           <Label
             fontSize="50"
-            class="fa bg-[#E7EAF0] rounded-[100%] p-10"
+            :class="`fa ${colors.bgGray} rounded-[100%] p-10`"
             text="&#xf007;"
           />
         </FlexboxLayout>
         <!-- Add your setup form components here -->
 
         <StackLayout>
-          <Button text="Skip for Now" :class="`${colors.button.primary}`" />
           <Button
-            text="Upload Photo"
-            :class="`${colors.button.secondary}`"
-          ></Button>
+            text="Skip for Now"
+            :class="`${colors.button.primary}`"
+            @tap="navigate(Home)"
+          />
+          <Button text="Upload Photo" :class="`${colors.button.secondary}`" />
         </StackLayout>
 
-        <StackLayout class="bg-[#EFF5F0] p-4">
-          <FlexboxLayout class="space-x-6">
-            <Label text="i" />
+        <StackLayout
+          orientation="horizontal"
+          :class="`space-x-6 ${colors.bgLightGreen} p-4 rounded-xl ${colors.textBritishGreen}`"
+        >
+          <FlexboxLayout class="items-center">
+            <Label fontSize="20" class="fa" text="&#xf06a;" />
           </FlexboxLayout>
-          <StackLayout <Label text="Note" />
-          <Label>
-            <FormattedString>
-              <Span text="You can" />
-            </FormattedString>
-          </Label>
+          <StackLayout>
+            <Label fontSize="24" class="font-medium mb-2" text="Kindly note" />
+            <Label fontSize="14" lineHeight="5" textWrap="true">
+              <FormattedString>
+                <Span text="You can always update your photo later \n" />
+                <Span text="from settings." />
+              </FormattedString>
+            </Label>
+          </StackLayout>
         </StackLayout>
       </StackLayout>
     </ScrollView>
