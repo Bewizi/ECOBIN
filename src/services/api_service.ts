@@ -1,6 +1,7 @@
 import { Http } from "@klippa/nativescript-http";
-
-const API_BASE = "http://192.168.0.4:3000/api";
+// import { error } from "console";
+import { ApiError } from "~/types";
+const API_BASE = "http://192.168.0.5:3000/api";
 
 export default {
   auth: {
@@ -36,10 +37,24 @@ export default {
           data: responseData,
           status: response.statusCode,
         };
-      } catch (error) {
+      } catch (error: unknown) {
         console.log("API request failed:", error);
         console.error("API request failed:", error);
-        throw error;
+
+        if (error instanceof Error) {
+          throw {
+            status: 500,
+            message: error.message,
+            errors: {},
+          } as ApiError;
+        }
+
+        const apiError = error as ApiError;
+        throw {
+          status: apiError.status || 500,
+          message: apiError.message || "Network request failed",
+          errors: apiError.errors || {},
+        } as ApiError;
       }
     },
 
@@ -73,7 +88,20 @@ export default {
       } catch (error) {
         console.log("API request failed:", error);
         console.error("API request failed:", error);
-        throw error;
+        if (error instanceof Error) {
+          throw {
+            status: 500,
+            message: error.message,
+            errors: {},
+          } as ApiError;
+        }
+
+        const apiError = error as ApiError;
+        throw {
+          status: apiError.status || 500,
+          message: apiError.message || "Network request failed",
+          errors: apiError.errors || {},
+        } as ApiError;
       }
     },
   },
