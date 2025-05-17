@@ -6,7 +6,7 @@ import Setup from "./pages/Setup.vue";
 
 <template>
   <Frame>
-    <Setup />
+    <OnboardingSlides />
   </Frame>
 </template>
 
