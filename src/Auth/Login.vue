@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import {
-  ActivityIndicator,
-  Dialogs,
   FlexboxLayout,
   FormattedString,
   Label,
@@ -26,10 +24,15 @@ const form = ref({
   password: "",
 });
 
-const errors = ref<Record<string, string>>({});
+const errors = ref<Record<string, string>>({
+  email: "",
+  password: "",
+});
 
 const handleFormSubmit = async () => {
   isLoading.value = true;
+  errors.value = { email: "", password: "" };
+
   try {
     console.log("Form Submitted", form.value);
 
@@ -40,29 +43,35 @@ const handleFormSubmit = async () => {
 
     if (response.status === 200) {
       await Toast.showSuccess("Login Successful");
-      console.log("Login Successful");
+      // console.log("Login Successful");
       navigate(Home, { clearHistory: true });
 
       form.value.email = "";
       form.value.password = "";
     }
-
-    if (
-      response.status === 400 ||
-      response.status === 401 ||
-      response.status === 422
-    ) {
-      if (errors) {
-        errors.value;
-      }
-      await Toast.showError("Invalid credentials");
-    } else {
-      await Toast.showError("Login failed. Please try again.");
-    }
-  } catch (error) {
+  } catch (error: any) {
     console.error("Login Failed", error);
 
-    await Toast.showError("Login failed. Please try again.");
+    if (typeof error === "object" && error !== null) {
+      const apiError = error as {
+        status?: number;
+        message?: string;
+        errors?: Record<string, string>;
+      };
+
+      if (apiError.errors) {
+        errors.value = {
+          ...errors.value,
+          ...apiError.errors,
+        };
+      }
+
+      const errorMessage =
+        apiError.message || "Login failed. Please try again.";
+      await Toast.showError(errorMessage);
+    } else {
+      await Toast.showError("An unexpected error occurred");
+    }
   } finally {
     isLoading.value = false;
   }
@@ -98,7 +107,9 @@ const navigateToSignup = () => {
             v-model="form.email"
             hint="Ecobin@gmail.com"
             keyboardType="email"
-            class="mb-4 p-4 border-2 border-[#C1C8D6] rounded-xl placeholder:text-[#7E8798]"
+            fontSize="16"
+            class="mb-4 p-4 border-2 border-[#C1C8D6] rounded-xl placeholder:text-[#7E8798] placeholder:text-[16px]"
+            :class="errors.email ? 'border-red-500' : 'border-[#C1C8D6]'"
           />
           <Label
             v-if="errors.email"
@@ -111,12 +122,14 @@ const navigateToSignup = () => {
           <Label text="Password" class="text-black mb-2" fontSize="20" />
           <FlexboxLayout
             class="justify-between items-center mb-4 p-4 border-2 border-[#C1C8D6] rounded-xl"
+            :class="errors.password ? 'border-red-500' : 'border-[#C1C8D6]'"
           >
             <TextField
               v-model="form.password"
               :secure="!showPassword"
               hint="Enter your password"
-              class="flex=grow placeholder:text-[#7E8798]"
+              fontSize="16"
+              class="flex-grow placeholder:text-[#7E8798] placeholder:text-[16px]"
             />
             <Label
               @tap="togglePasswordVisibility"
@@ -125,6 +138,11 @@ const navigateToSignup = () => {
               :text="showPassword ? '&#xf070;' : '&#xf06e;'"
             />
           </FlexboxLayout>
+          <Label
+            v-if="errors.password"
+            :text="errors.password"
+            class="text-red-500 mb-3 text-sm"
+          />
 
           <Button
             :isEnabled="!isLoading"
@@ -133,7 +151,7 @@ const navigateToSignup = () => {
           >
             <FormattedString>
               <Span
-                fontSize="14"
+                fontSize="16"
                 v-if="!isLoading"
                 text="Login"
                 class="text-white font-medium"
@@ -152,7 +170,7 @@ const navigateToSignup = () => {
           <StackLayout>
             <Label
               lineHeight="5"
-              fontSize="20"
+              fontSize="16"
               class="text-center mt-4 text-[#575E6C]"
               textWrap="true"
             >
@@ -167,12 +185,12 @@ const navigateToSignup = () => {
             <FlexboxLayout class="justify-center items-center mt-4">
               <Label
                 text="Don't have an account? "
-                fontSize="20"
+                fontSize="16"
                 class="text-[#575E6C]"
               />
               <Label
                 text="Register"
-                fontSize="20"
+                fontSize="16"
                 class="text-[#54B469] font-medium"
                 @tap="navigateToSignup"
               />

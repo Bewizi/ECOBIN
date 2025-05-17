@@ -19,6 +19,7 @@ import api from "~/services/api_service";
 import { navigate } from "~/utils/navigation";
 import Login from "./Login.vue";
 import { Toast } from "~/services/toast_service";
+import { ApiError } from "~/types";
 
 const completeSetup = () => {
   $navigateTo(Home, { clearHistory: true });
@@ -30,6 +31,7 @@ const skipForNow = () => {
 };
 
 const showPassword = ref<boolean>(false);
+const isLoading = ref<boolean>(false);
 
 const form = ref({
   firstname: "",
@@ -42,6 +44,9 @@ const form = ref({
 const errors = ref<Record<string, string>>({});
 
 const handleFormSubmit = async () => {
+  isLoading.value = true;
+  errors.value = {};
+
   try {
     console.log("Form Submitted", form.value);
 
@@ -83,8 +88,36 @@ const handleFormSubmit = async () => {
       viewModal();
     }
   } catch (error) {
+    const apiError = error as ApiError;
     console.log("Registration Failed", error);
-    await Toast.showError("Registration Failed");
+
+    if (apiError.errors) {
+      errors.value = apiError.errors;
+    }
+
+    await Toast.showError(apiError.message || "Registration Failed");
+    // if (typeof error === "object" && error !== null) {
+    //   const apiError = error as {
+    //     status?: number;
+    //     message?: string;
+    //     errors?: Record<string, string>;
+    //   };
+
+    //   if (apiError.errors) {
+    //     errors.value = {
+    //       ...errors.value,
+    //       ...apiError.errors,
+    //     };
+    //   }
+
+    //   const errorMessage =
+    //     apiError.message || "Registration failed. Please try again.";
+    //   await Toast.showError(errorMessage);
+    // } else {
+    //   await Toast.showError("An unexpected error occurred");
+    // }
+  } finally {
+    isLoading.value = false;
   }
 };
 
@@ -92,7 +125,7 @@ const togglePasswordVisibility = () => {
   showPassword.value = !showPassword.value;
 };
 
-const navigateToSignup = () => {
+const navigateToLogin = () => {
   navigate(Login);
 };
 </script>
@@ -123,6 +156,13 @@ const navigateToSignup = () => {
             v-model="form.firstname"
             hint="Enter your full name"
             class="mb-4 p-4 border-2 border-[#C1C8D6] rounded-xl placeholder:text-[#7E8798]"
+            :class="errors.firstname ? 'border-red-500' : 'border-[#C1C8D6]'"
+          />
+          <Label
+            v-if="errors.firstname"
+            :text="errors.firstname"
+            class="text-red-500 mb-3"
+            fontSize="14"
           />
           <!-- First Name -->
 
@@ -132,6 +172,13 @@ const navigateToSignup = () => {
             v-model="form.lastname"
             hint="Enter your full name"
             class="mb-4 p-4 border-2 border-[#C1C8D6] rounded-xl placeholder:text-[#7E8798]"
+            :class="errors.lastname ? 'border-red-500' : 'border-[#C1C8D6]'"
+          />
+          <Label
+            v-if="errors.lastname"
+            :text="errors.lastname"
+            class="text-red-500 mb-3"
+            fontSize="14"
           />
           <!-- Last Name -->
 
@@ -142,6 +189,13 @@ const navigateToSignup = () => {
             hint="Ecobin@gmail.com"
             keyboardType="email"
             class="mb-4 p-4 border-2 border-[#C1C8D6] rounded-xl placeholder:text-[#7E8798]"
+            :class="errors.email ? 'border-red-500' : 'border-[#C1C8D6]'"
+          />
+          <Label
+            v-if="errors.email"
+            :text="errors.email"
+            class="text-red-500 mb-3"
+            fontSize="14"
           />
           <!-- Email Address -->
 
@@ -152,6 +206,13 @@ const navigateToSignup = () => {
             hint="Enter your phone number"
             keyboardType="phone"
             class="mb-4 p-4 border-2 border-[#C1C8D6] rounded-xl placeholder:text-[#7E8798]"
+            :class="errors.phoneNumber ? 'border-red-500' : 'border-[#C1C8D6]'"
+          />
+          <Label
+            v-if="errors.phoneNumber"
+            :text="errors.phoneNumber"
+            class="text-red-500 mb-3"
+            fontSize="14"
           />
           <!-- Phone Number -->
 
@@ -159,6 +220,7 @@ const navigateToSignup = () => {
           <Label text="Password" class="text-black mb-2" fontSize="20" />
           <FlexboxLayout
             class="justify-between items-center mb-4 p-4 border-2 border-[#C1C8D6] rounded-xl"
+            :class="errors.password ? 'border-red-500' : 'border-[#C1C8D6]'"
           >
             <TextField
               v-model="form.password"
@@ -173,6 +235,13 @@ const navigateToSignup = () => {
               :text="showPassword ? '&#xf070;' : '&#xf06e;'"
             />
           </FlexboxLayout>
+          <Label
+            v-if="errors.password"
+            :text="errors.password"
+            class="text-red-500 mb-3"
+            fontSize="14"
+          />
+          <!-- PASSWORD -->
 
           <Button
             text="Create Account"
@@ -184,7 +253,7 @@ const navigateToSignup = () => {
           <StackLayout>
             <Label
               lineHeight="5"
-              fontSize="14"
+              fontSize="16"
               class="text-center mt-4 text-[#575E6C]"
               textWrap="true"
             >
@@ -199,14 +268,14 @@ const navigateToSignup = () => {
             <FlexboxLayout class="justify-center items-center mt-4">
               <Label
                 text="Have an account? "
-                fontSize="20"
+                fontSize="18"
                 class="text-[#575E6C]"
               />
               <Label
                 text="Login"
-                fontSize="20"
+                fontSize="18"
                 class="text-[#54B469] font-medium"
-                @tap="navigateToSignup"
+                @tap="navigateToLogin"
               />
             </FlexboxLayout>
           </StackLayout>
