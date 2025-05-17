@@ -2,6 +2,7 @@
 import { FlexboxLayout, StackLayout } from "@nativescript/core";
 import { $closeModal, $navigateTo } from "nativescript-vue";
 import Home from "~/pages/Home.vue";
+import Setup from "~/pages/Setup.vue";
 
 // defineProps({
 //   completeSetup: {
@@ -17,7 +18,7 @@ import Home from "~/pages/Home.vue";
 // completeSetup($navigateTo(Home, { clearHistory: true }))
 
 const completeSetup = () => {
-  $navigateTo(Home, { clearHistory: true });
+  $navigateTo(Setup, { clearHistory: true });
   $closeModal();
 };
 
