@@ -146,15 +146,22 @@ const logout = () => {
             <!-- Label -->
             <StackLayout class="mb-10 border-2 border-[#C1C8D6] rounded-xl p-4">
               <FlexboxLayout class="items-center justify-between">
-                <Label fontSize="16" class="text-[#1C202A]" textWrap="true">
-                  <FormattedString>
-                    <Span class="fa text-black" text="&#xf3c5;" />
-                    <Span text="  " />
-                    <Span text="  " />
-                    <Span text="10 block, Majek Estate, Ibafo, \n" />
-                    <Span text="Lagos State" />
-                  </FormattedString>
-                </Label>
+                <!-- location -->
+                <FlexboxLayout class="items-center space-x-2">
+                  <Label class="fa text-black" fontSize="24" text="&#xf3c5;" />
+                  <Label
+                    fontSize="16"
+                    class="text-[#1C202A]"
+                    textWrap="true"
+                    lineHeight="5"
+                  >
+                    <FormattedString>
+                      <Span text="10 block, Majek Estate, Ibafo, \n" />
+                      <Span text="Lagos State" />
+                    </FormattedString>
+                  </Label>
+                </FlexboxLayout>
+                <!-- location -->
 
                 <!-- Edit button -->
                 <Label fontSize="16" class="text-[#575E6C]">
