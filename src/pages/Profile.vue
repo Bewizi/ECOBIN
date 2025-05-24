@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import {
+  Button,
   Dialogs,
   DockLayout,
   FlexboxLayout,
@@ -14,6 +15,7 @@ import { $navigateTo, defineComponent } from "nativescript-vue";
 import Login from "~/Auth/Login.vue";
 import BottomTabs from "~/components/BottomTabs.vue";
 import { Toast } from "~/services/toast_service";
+import { colors } from "~/utils/colors";
 import { navigate } from "~/utils/navigation";
 
 defineComponent({
@@ -34,89 +36,170 @@ const logout = () => {
       <ScrollView>
         <StackLayout class="pt-10 px-6">
           <!-- profile picture -->
-          <FlexboxLayout class="flex-col justify-center items-center">
+          <FlexboxLayout class="space-x-10 items-center">
             <Label
-              class="w-[50px] h-[50px] border-2 border-black rounded-full"
+              class="w-[100px] h-[100px] border-2 border-black rounded-full"
             />
-            <Label
-              text="Full Name"
-              fontSize="20"
-              class="mt-2 font-semibold text-black"
-            />
+
+            <StackLayout>
+              <!-- USERSNAME -->
+              <Label
+                text="Toluwalase Bewaji"
+                fontSize="32"
+                class="mb-2 font-semibold text-black"
+              />
+              <!-- USERSNAME -->
+
+              <!-- Green Hero -->
+              <FlexboxLayout class="space-x-5 items-center">
+                <Label fontSize="16">
+                  <FormattedString>
+                    <Span class="fa text-[#3FA45A]" text="&#xf058;" />
+                    <Span text=" " />
+                    <Span text=" " />
+                    <Span text=" " />
+                    <Span
+                      text="Green Hero"
+                      class="text-[#3FA45A] font-medium"
+                    />
+                    text="Green Hero" />
+                  </FormattedString>
+                </Label>
+                <!-- Green Hero -->
+
+                <!-- Location -->
+                <Label fontSize="16">
+                  <FormattedString>
+                    <Span class="fa text-[#1C202A] ml-2" text="&#xf3c5;" />
+                    <Span text=" " />
+                    <Span text=" " />
+                    <Span text=" " />
+                    <Span
+                      class="text-[#1C202A] font-medium"
+                      text="Ibadan, Nigeria"
+                    />
+                  </FormattedString>
+                </Label>
+                <!-- Location -->
+              </FlexboxLayout>
+            </StackLayout>
           </FlexboxLayout>
           <!-- profile picture -->
 
           <!-- Main Warpper Container -->
           <StackLayout class="mt-10">
             <!-- Edit Profile -->
-            <StackLayout class="bg-gray-100 rounded-2xl p-4 mb-5">
-              <FlexboxLayout class="justify-between">
-                <Label fontSize="20" class="text-black">
+            <FlexboxLayout class="justify-between mb-10 gap-4 items-center">
+              <StackLayout class="bg-[#F5F7FA] rounded-2xl p-8">
+                <!-- icon -->
+                <Label class="text-[#575E6C] mb-4" fontSize="16 ">
                   <FormattedString>
-                    <Span class="fa" text="&#xf007;" />
+                    <Span class="fa" text="&#xf1f8;" />
                     <Span text="  " />
-                    <Span text="  " />
-                    <Span text="Edit Profile" />
+                    <Span text=" " />
+                    <Span text="Total Recycled" />
                   </FormattedString>
                 </Label>
-                <Label
-                  fontSize="20"
-                  class="fa text-[#585E6D]"
-                  text="&#xf054;"
-                />
-              </FlexboxLayout>
-            </StackLayout>
+                <!-- icon -->
+
+                <!-- text -->
+                <Label fontSize="20" class="text-black">
+                  <FormattedString>
+                    <Span text="23KG " />
+                    <Span
+                      fontSize="14"
+                      class="text-[#747C8D]"
+                      text="this month"
+                    />
+                  </FormattedString>
+                </Label>
+                <!-- text -->
+              </StackLayout>
+
+              <StackLayout class="bg-[#F5F7FA] rounded-2xl p-8">
+                <!-- icon -->
+                <Label class="text-[#575E6C]" fontSize="16 ">
+                  <FormattedString>
+                    <Span class="fa" text="&#xf00c;" />
+                    <Span text="  " />
+                    <Span text=" " />
+                    <Span text="Pickups Completed" />
+                  </FormattedString>
+                </Label>
+                <!-- icon -->
+
+                <!-- text -->
+                <Label text="4 pickups" fontSize="20" class="text-black mt-2">
+                </Label>
+                <!-- text -->
+              </StackLayout>
+            </FlexboxLayout>
             <!-- Edit Profile -->
 
-            <!-- Pefromance Stats -->
-            <StackLayout class="bg-gray-100 rounded-2xl p-4 mb-5">
-              <FlexboxLayout class="justify-between">
-                <Label fontSize="20" class="text-black">
+            <!-- Preferences -->
+            <!-- Label -->
+            <Label
+              text="Preferences"
+              fontSize="20"
+              class="text-black font-medium mb-4"
+            />
+            <!-- Label -->
+            <StackLayout class="mb-10 border-2 border-[#C1C8D6] rounded-xl p-4">
+              <FlexboxLayout class="items-center justify-between">
+                <Label fontSize="16" class="text-[#1C202A]" textWrap="true">
                   <FormattedString>
-                    <Span class="fa" text="&#xf201;" />
+                    <Span class="fa text-black" text="&#xf3c5;" />
                     <Span text="  " />
                     <Span text="  " />
-                    <Span text="Performance Stats" />
+                    <Span text="10 block, Majek Estate, Ibafo, \n" />
+                    <Span text="Lagos State" />
                   </FormattedString>
                 </Label>
-                <Label
-                  fontSize="20"
-                  class="fa text-[#585E6D]"
-                  text="&#xf054;"
-                />
-              </FlexboxLayout>
-            </StackLayout>
-            <!-- Pefromance Stats -->
 
-            <!-- Achievements -->
-            <StackLayout class="bg-gray-100 rounded-2xl p-4 mb-5">
-              <FlexboxLayout class="justify-between">
-                <Label fontSize="20" class="text-black">
+                <!-- Edit button -->
+                <Label fontSize="16" class="text-[#575E6C]">
                   <FormattedString>
-                    <Span class="fa" text="&#xf559;" />
+                    <Span class="fa" text="&#xf304;" />
                     <Span text="  " />
                     <Span text="  " />
-                    <Span text="Badges or Achievements" />
+                    <Span text="Edit" />
                   </FormattedString>
                 </Label>
-                <Label
-                  fontSize="20"
-                  class="fa text-[#585E6D]"
-                  text="&#xf054;"
-                />
+                <!-- Edit button -->
+              </FlexboxLayout>
+              <!-- Label -->
+
+              <!-- Label -->
+              <FlexboxLayout class="items-center justify-between mt-5">
+                <Label fontSize="16" class="text-[#1C202A]" textWrap="true">
+                  <FormattedString>
+                    <Span class="fa text-black" text="&#xf073;" />
+                    <Span text="  " />
+                    <Span text="  " />
+                    <Span text="9 AM - Thursays" />
+                  </FormattedString>
+                </Label>
+
+                <!-- Change button -->
+                <Label fontSize="16" class="text-[#575E6C]">
+                  <FormattedString>
+                    <Span text="Change" />
+                  </FormattedString>
+                </Label>
+                <!-- Change button -->
               </FlexboxLayout>
             </StackLayout>
-            <!-- Achievements -->
+            <!-- Preferences -->
 
-            <!-- Settings -->
-            <StackLayout class="bg-gray-100 rounded-2xl p-4 mb-5">
+            <!-- App Settings -->
+            <StackLayout class="mb-5">
               <FlexboxLayout class="justify-between">
                 <Label fontSize="20" class="text-black">
                   <FormattedString>
                     <Span class="fa" text="&#xf013;" />
                     <Span text="  " />
                     <Span text="  " />
-                    <Span text="Settings" />
+                    <Span text="App Settings" />
                   </FormattedString>
                 </Label>
                 <Label
@@ -126,17 +209,17 @@ const logout = () => {
                 />
               </FlexboxLayout>
             </StackLayout>
-            <!-- Settings -->
+            <!-- App Settings -->
 
-            <!-- Languages -->
-            <StackLayout class="bg-gray-100 rounded-2xl p-4 mb-5">
+            <!-- Help and Supports -->
+            <StackLayout class="mb-5">
               <FlexboxLayout class="justify-between">
                 <Label fontSize="20" class="text-black">
                   <FormattedString>
                     <Span class="fa" text="&#xf1ab;" />
                     <Span text="  " />
                     <Span text="  " />
-                    <Span text="Language" />
+                    <Span text="Help & Support" />
                   </FormattedString>
                 </Label>
                 <Label
@@ -146,17 +229,17 @@ const logout = () => {
                 />
               </FlexboxLayout>
             </StackLayout>
-            <!-- Languages -->
+            <!-- Help and Supports -->
 
-            <!-- About Us -->
-            <StackLayout class="bg-gray-100 rounded-2xl p-4 mb-5">
+            <!-- Terms & Privacy -->
+            <StackLayout class="mb-5">
               <FlexboxLayout class="justify-between">
                 <Label fontSize="20" class="text-black">
                   <FormattedString>
                     <Span class="fa" text="&#xf06a;" />
                     <Span text="  " />
                     <Span text="  " />
-                    <Span text="About Us" />
+                    <Span text="Terms & Privacy" />
                   </FormattedString>
                 </Label>
                 <Label
@@ -166,10 +249,10 @@ const logout = () => {
                 />
               </FlexboxLayout>
             </StackLayout>
-            <!-- About Us -->
+            <!-- Terms & Privacy -->
 
             <!-- Logout -->
-            <StackLayout class="bg-gray-100 rounded-2xl p-4 mb-5" @tap="logout">
+            <StackLayout class="mb-5" @tap="logout">
               <FlexboxLayout class="justify-between">
                 <Label fontSize="20" class="text-black">
                   <FormattedString>
@@ -184,6 +267,14 @@ const logout = () => {
             <!-- Logout -->
           </StackLayout>
           <!-- Main Warpper Container -->
+
+          <StackLayout class="mt-10">
+            <Button text="Pickup History" :class="`${colors.button.primary}`" />
+            <Button
+              text="View Activity"
+              :class="`${colors.button.secondary}`"
+            />
+          </StackLayout>
         </StackLayout>
       </ScrollView>
     </DockLayout>
