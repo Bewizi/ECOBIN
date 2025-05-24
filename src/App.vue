@@ -2,11 +2,12 @@
 import OnboardingSlides from "./components/onboarding/OnboardingSlides.vue";
 import { Frame } from "@nativescript/core";
 import Setup from "./pages/Setup.vue";
+import Profile from "./pages/Profile.vue";
 </script>
 
 <template>
   <Frame>
-    <OnboardingSlides />
+    <Profile />
   </Frame>
 </template>
 
