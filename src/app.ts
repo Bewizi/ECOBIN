@@ -18,4 +18,15 @@ app.registerElement(
     },
   }
 );
+
+app.registerElement(
+  "HTMLLabel",
+  () => require("@nativescript-community/ui-label").Label
+);
+
+app.registerElement(
+  "LineChart",
+  () => require("@nativescript-community/ui-chart").LineChart
+);
+
 app.start();
