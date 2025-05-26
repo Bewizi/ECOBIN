@@ -4,11 +4,12 @@ import { Frame } from "@nativescript/core";
 import Setup from "./pages/Setup.vue";
 import Profile from "./pages/Profile.vue";
 import Activity from "./pages/Activity.vue";
+import Requests from "./pages/Requests.vue";
 </script>
 
 <template>
   <Frame>
-    <Activity />
+    <Requests />
   </Frame>
 </template>
 
