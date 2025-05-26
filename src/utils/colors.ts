@@ -7,6 +7,7 @@ const _ =
   "bg-[#54B469] bg-[#ffffff] bg-[#EFF5F0] bg-[#E7EAF0]  text-[#54B469] border-[#54B469] outline-[#54B469] text-[#fffff] text-[#1D3D23]";
 
 export const colors = {
+  Text: `text-[${hex}]`,
   bgClass: `bg-[${hex}]`,
   bgGray: `bg-[${gray}]`,
   bgLightGreen: `bg-[${lightGreen}]`,
