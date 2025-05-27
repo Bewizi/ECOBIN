@@ -4,16 +4,27 @@ import {
   FormattedString,
   Label,
   Page,
-  ScrollView,
   StackLayout,
 } from "@nativescript/core";
-import CardView from "~/components/CardView.vue";
 </script>
 
 <template>
   <Page actionBarHidden="true">
     <StackLayout class="px-5 pt-10">
-      <Label fontSize="24" class="font-bold mb-5" text="Waste Pickup" />
+      <FlexboxLayout class="justify-between items-center mb-5">
+        <Label fontSize="24" class="font-bold text-black" text="Waste Pickup" />
+
+        <!-- Edit button -->
+        <Label fontSize="16" class="text-[#575E6C]">
+          <FormattedString>
+            <Span class="fa" text="&#xf304;" />
+            <Span text="  " />
+            <Span text="  " />
+            <Span text="Edit" />
+          </FormattedString>
+        </Label>
+        <!-- Edit button -->
+      </FlexboxLayout>
       <StackLayout class="border-2 border-gray-600 px-6 rounded-lg py-4">
         <!-- Address -->
         <FlexboxLayout className="justify-between items-center mb-5">
