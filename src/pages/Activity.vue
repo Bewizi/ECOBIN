@@ -155,7 +155,7 @@ const updateChartData = (chart: LineChart) => {
   chart.data = lineData;
 
   // Animate chart appearance
-  chart.animateX(800);
+  // chart.animateX(800);
 
   // Refresh chart
   chart.invalidate();
