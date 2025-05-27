@@ -7,10 +7,16 @@ import {
   StackLayout,
 } from "@nativescript/core";
 import { $navigateTo } from "nativescript-vue";
+import Requests from "~/pages/Requests.vue";
+import { navigate } from "~/utils/navigation";
 import RequestPickupViews from "~/views/RequestPickupViews.vue";
 
 const navigateToView = (component) => {
   $navigateTo(component);
+};
+
+const navigateToPickupDetails = () => {
+  navigate(Requests);
 };
 </script>
 
@@ -35,8 +41,13 @@ const navigateToView = (component) => {
         </Button>
       </StackLayout>
 
+      <!-- Schedule Pickup -->
       <StackLayout>
-        <Button class="bg-[#F6F7F9] p-4 rounded-xl" width="200">
+        <Button
+          class="bg-[#F6F7F9] p-4 rounded-xl"
+          width="200"
+          @tap="navigateToPickupDetails"
+        >
           <FormattedString>
             <Span class="fa text-[#2A9B4A] text-xl" text="&#xf073;"></Span>
             <Span text="   " />
@@ -49,7 +60,9 @@ const navigateToView = (component) => {
         </Button>
       </StackLayout>
     </FlexboxLayout>
+    <!-- Schedule Pickup -->
 
+    <!-- Dropoff Points -->
     <FlexboxLayout class="items-center justify-between">
       <StackLayout>
         <Button class="bg-[#F6F7F9] p-4 rounded-xl" width="200">
@@ -64,6 +77,7 @@ const navigateToView = (component) => {
           </FormattedString>
         </Button>
       </StackLayout>
+      <!-- Dropoff Points -->
 
       <StackLayout>
         <Button class="bg-[#F6F7F9] p-4 rounded-xl" width="200">
