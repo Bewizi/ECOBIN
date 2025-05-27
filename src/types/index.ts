@@ -34,3 +34,11 @@ export interface ApiError {
   message?: string;
   errors?: Record<string, string>;
 }
+
+export interface PickupFormData {
+  pickupAddress: string;
+  pickupDate: Date;
+  pickupTime: Date;
+  additionalNote: string;
+  requestType: string;
+}
