@@ -2,12 +2,10 @@
 import {
   Button,
   DatePicker,
-  GridLayout,
   Label,
   ListPicker,
   TextView,
   TimePicker,
-  getRootLayout,
 } from "@nativescript/core";
 import {
   DockLayout,
@@ -19,20 +17,30 @@ import {
 import BottomTabs from "~/components/BottomTabs.vue";
 import * as geolocation from "@nativescript/geolocation";
 import { CoreTypes } from "@nativescript/core";
-
 import { colors } from "~/utils/colors";
-
 import { ref } from "nativescript-vue";
-import { createConfirmationPopup } from "~/utils/helper";
 import { Toast } from "~/services/toast_service";
+import { pickupStore } from "~/services/pickup-store";
+import { pickupModal } from "~/utils/modal";
 
 const errorMessage = ref<string>("");
+
+const requestTypes = [
+  { id: 1, name: "Household Waste" },
+  { id: 2, name: "E-Waste" },
+  { id: 3, name: "Garden Waste" },
+  { id: 4, name: "Bulk Items" },
+  { id: 5, name: "Organic Waste" },
+  { id: 6, name: "Electonic Waste" },
+  { id: 5, name: "Medical Waste" },
+];
 
 const formData = ref({
   pickupAddress: "",
   pickupDate: new Date(),
   pickupTime: new Date(),
-  additionalDate: "",
+  additionalNote: "",
+  requestType: 0, // Default to first request type
 });
 
 const fetchCurrentLocation = async () => {
@@ -61,8 +69,14 @@ const fetchCurrentLocation = async () => {
 const handleConfirmPickup = () => {
   errorMessage.value = ""; // Reset error message
 
+  const selectedRequestType =
+    formData.value.requestType !== null
+      ? requestTypes[formData.value.requestType]
+      : null;
+
   // Handle the pickup confirmation logic here
   console.log("Pickup confirmed with data:", formData.value);
+
   if (!formData.value.pickupAddress) {
     console.error("Pickup address is required");
     // Show an error message to the user
@@ -71,34 +85,30 @@ const handleConfirmPickup = () => {
     return;
   }
 
-  const confirmationPopup = createConfirmationPopup(formData.value);
+  if (!formData.value.requestType) {
+    errorMessage.value = "Please select a request type.";
+    Toast.showError("Please select a request type.");
+    return;
+  }
 
-  confirmationPopup.translateY = 100;
+  // Save the pickup data to the store
+  const savedPickup = pickupStore.addPickup({
+    pickupAddress: formData.value.pickupAddress,
+    pickupDate: formData.value.pickupDate,
+    pickupTime: formData.value.pickupTime,
+    additionalNote: formData.value.additionalNote,
+    requestType: selectedRequestType ? selectedRequestType.name : "",
+  });
 
-  getRootLayout()
-    .open(confirmationPopup, {
-      shadeCover: {
-        color: "#000",
-        opacity: 0.7,
-        tapToClose: true,
-      },
-      animation: {
-        enterFrom: {
-          opacity: 0,
-          translateY: 500,
-          duration: 500,
-        },
-        exitTo: {
-          opacity: 0,
-          duration: 300,
-        },
-      },
-    })
-    .then(() => {
-      confirmationPopup.translateY = 0;
-      console.log("Confirmation popup opened");
-    })
-    .catch((ex) => console.error(ex));
+  console.log("Pickup confirmed and saved:", savedPickup);
+
+  pickupModal({
+    pickupAddress: formData.value.pickupAddress,
+    pickupDate: formData.value.pickupDate,
+    pickupTime: formData.value.pickupTime,
+    additionalNote: formData.value.additionalNote,
+    requestType: selectedRequestType ? selectedRequestType.name : "",
+  });
 };
 </script>
 
@@ -209,6 +219,26 @@ const handleConfirmPickup = () => {
             />
           </StackLayout>
           <!-- PICKUP TIME -->
+
+          <!-- REQUEST TYPE -->
+          <StackLayout class="mb-3">
+            <Label
+              text="Request Type"
+              fontSize="20"
+              class="mb-3.5 text-black"
+            />
+            <FlexboxLayout
+              class="space-x-5 p-4 border-2 border-[#C1C8D6] rounded-xl"
+            >
+              <Label class="fa text-black" text="&#xf1b9;" fontSize="20" />
+              <ListPicker
+                :items="requestTypes.map((type:any) => type.name)"
+                v-model="formData.requestType"
+                class="flex-grow"
+              />
+            </FlexboxLayout>
+          </StackLayout>
+          <!-- REQUEST TYPE -->
 
           <!-- ADDITIONAL DATE -->
           <StackLayout class="mb-10">
