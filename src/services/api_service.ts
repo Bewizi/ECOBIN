@@ -1,7 +1,7 @@
 import { Http } from "@klippa/nativescript-http";
 // import { error } from "console";
 import { ApiError } from "~/types";
-const API_BASE = "http://192.168.0.5:3000/api";
+const API_BASE = "http://192.168.0.3:3000/api";
 
 export default {
   auth: {
