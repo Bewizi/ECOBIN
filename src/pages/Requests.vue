@@ -3,9 +3,11 @@ import {
   Button,
   DatePicker,
   GridLayout,
+  Label,
   ListPicker,
   TextView,
   TimePicker,
+  getRootLayout,
 } from "@nativescript/core";
 import {
   DockLayout,
@@ -21,11 +23,10 @@ import { CoreTypes } from "@nativescript/core";
 import { colors } from "~/utils/colors";
 
 import { ref } from "nativescript-vue";
-import { createPopupView } from "~/utils/helper";
-import { usePopover } from "~/composables/usePopover";
+import { createConfirmationPopup } from "~/utils/helper";
+import { Toast } from "~/services/toast_service";
 
-const { createPopover, showPopover, hidePopover, popoverVisible } =
-  usePopover();
+const errorMessage = ref<string>("");
 
 const formData = ref({
   pickupAddress: "",
@@ -57,21 +58,47 @@ const fetchCurrentLocation = async () => {
   }
 };
 
-// Create the popover once when component mounts
-const popupView = createPopupView("red", 200, 100);
-createPopover(popupView);
-
-const togglePopover = () => {
-  if (popoverVisible.value) {
-    hidePopover();
-  } else {
-    showPopover();
-  }
-};
-
 const handleConfirmPickup = () => {
+  errorMessage.value = ""; // Reset error message
+
   // Handle the pickup confirmation logic here
   console.log("Pickup confirmed with data:", formData.value);
+  if (!formData.value.pickupAddress) {
+    console.error("Pickup address is required");
+    // Show an error message to the user
+    errorMessage.value = "Please enter a pickup address.";
+    Toast.showError("Please enter a pickup address.");
+    return;
+  }
+
+  const confirmationPopup = createConfirmationPopup(formData.value);
+
+  confirmationPopup.translateY = 100;
+
+  getRootLayout()
+    .open(confirmationPopup, {
+      shadeCover: {
+        color: "#000",
+        opacity: 0.7,
+        tapToClose: true,
+      },
+      animation: {
+        enterFrom: {
+          opacity: 0,
+          translateY: 500,
+          duration: 500,
+        },
+        exitTo: {
+          opacity: 0,
+          duration: 300,
+        },
+      },
+    })
+    .then(() => {
+      confirmationPopup.translateY = 0;
+      console.log("Confirmation popup opened");
+    })
+    .catch((ex) => console.error(ex));
 };
 </script>
 
@@ -115,17 +142,16 @@ const handleConfirmPickup = () => {
               hint="Enter your pickup address"
               fontSize="16"
               class="p-4 border-2 border-[#C1C8D6] rounded-xl placeholder:text-[#7E8798] placeholder:text-[16px]"
+              @textChange="errorMessage = ''"
             />
+            <!-- SHOW ERROR -->
             <Label
-              v-if="!formData.pickupAddress"
-              text="Please enter a valid address."
+              v-if="errorMessage"
               class="text-red-500 mt-2"
+              fontSize="16"
+              :text="errorMessage"
             />
-            <Label
-              v-if="formData.pickupAddress"
-              text="Address looks good!"
-              class="text-green-500 mt-2"
-            />
+            <!-- SHOW ERROR -->
 
             <!-- Change Location -->
             <Label
