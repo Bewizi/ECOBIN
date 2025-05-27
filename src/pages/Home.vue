@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { ref } from "nativescript-vue";
 import {
   DockLayout,
   FlexboxLayout,
@@ -10,6 +11,13 @@ import DateSelector from "~/components/DateSelector.vue";
 import PickupCard from "~/components/PickupCard.vue";
 import QuickActions from "~/components/QuickActions.vue";
 import WasteActivity from "~/components/WasteActivity.vue";
+import { computed } from "nativescript-vue";
+import { pickupStore } from "~/services/pickup-store";
+// This would typically come from your app's state management or API
+// Get the latest pickup or all pending pickups
+const latestPickup = computed(() => pickupStore.getLatestPickup());
+const pendingPickups = computed(() => pickupStore.getPendingPickups());
+const allPickups = computed(() => pickupStore.getAllPickups());
 </script>
 
 <template>
@@ -63,8 +71,22 @@ import WasteActivity from "~/components/WasteActivity.vue";
             <!-- Date Selector -->
 
             <!-- PickupCard -->
-            <PickupCard />
+            <PickupCard v-if="latestPickup" :pickupData="latestPickup" />
             <!-- PickupCard -->
+
+            <!-- Or show all pending pickups
+            <StackLayout class="mt-5">
+              <Label
+                v-if="pendingPickups.length > 0"
+                text="Pending Pickups"
+                class="text-lg font-semibold mb-3"
+              />
+              <PickupCard
+                v-for="pickup in pendingPickups"
+                :key="pickup.id"
+                :pickupData="pickup"
+              />
+            </StackLayout> -->
 
             <!-- QuickActions -->
             <QuickActions />
