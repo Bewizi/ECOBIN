@@ -109,6 +109,12 @@ const handleConfirmPickup = () => {
 
       <ScrollView>
         <StackLayout class="pt-10 px-4">
+          <Label
+            class="fa mb-5 font-extrabold text-2xl text-black"
+            text="&#xf060;"
+            @tap="$navigateBack"
+          />
+
           <StackLayout class="mb-10">
             <Label
               fontSize="24"
