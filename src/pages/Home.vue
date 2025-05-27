@@ -74,8 +74,8 @@ const allPickups = computed(() => pickupStore.getAllPickups());
             <PickupCard v-if="latestPickup" :pickupData="latestPickup" />
             <!-- PickupCard -->
 
-            <!-- Or show all pending pickups
-            <StackLayout class="mt-5">
+            <!-- Or show all pending pickups -->
+            <!-- <StackLayout class="mt-5">
               <Label
                 v-if="pendingPickups.length > 0"
                 text="Pending Pickups"
