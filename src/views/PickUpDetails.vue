@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { computed } from "nativescript-vue";
+import { pickupStore } from "~/services/pickup-store";
+import PickupCard from "~/components/PickupCard.vue";
 import {
   FlexboxLayout,
   FormattedString,
@@ -6,6 +9,8 @@ import {
   Page,
   StackLayout,
 } from "@nativescript/core";
+
+const allPickups = computed(() => pickupStore.getAllPickups());
 </script>
 
 <template>
@@ -121,7 +126,22 @@ import {
             </Label>
           </StackLayout>
         </FlexboxLayout>
-        <!-- Waste Type -->
+      </StackLayout>
+      <!-- Waste Type -->
+
+      <!-- Or show all  pickups -->
+      <StackLayout>
+        <Label
+          fontSize="20"
+          v-if="allPickups.length > 0"
+          text="All Pickups"
+          class="font-semibold mb-3 text-black"
+        />
+        <PickupCard
+          v-for="pickup in allPickups"
+          :key="pickup.id"
+          :pickupData="pickup"
+        />
       </StackLayout>
     </StackLayout>
   </Page>
