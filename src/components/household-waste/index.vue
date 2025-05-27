@@ -10,6 +10,7 @@ import {
 } from "@nativescript/core";
 import { $navigateBack, ref } from "nativescript-vue";
 import { HouseHoldItems } from "~/types";
+import Requests from "~/pages/Requests.vue";
 
 const items = ref<HouseHoldItems[]>([
   {
@@ -47,6 +48,7 @@ const items = ref<HouseHoldItems[]>([
         dock="bottom"
         class="bg-[#54B469] shadow-none rounded-md"
         height="65"
+        @tap="$navigateTo(Requests)"
       >
         <FormattedString>
           <Span text="Next" class="text-white text-lg font-medium" />
